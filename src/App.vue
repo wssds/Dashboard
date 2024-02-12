@@ -11,10 +11,9 @@ import NavBarComp from './components/NavBarComp.vue';
 </template>
 
 <style scoped lang="scss">
-
 @media only screen and (min-width: 600px) {
-.c-app__wrapper {
-  display: flex;
-}
+  .c-app__wrapper {
+    position: relative;
+  }
 }
 </style>
