@@ -2,7 +2,8 @@
 
 <template>
     <nav class="c-navbar">
-        <span>hi</span>
+        <span>icon 1</span>
+        <span>icon 2</span>
     </nav>
 </template>
 
@@ -18,12 +19,15 @@
 .c-navbar {
     width: 50px;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: brown;
     z-index: 100;
     margin-bottom: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 }
 </style>
