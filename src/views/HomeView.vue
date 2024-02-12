@@ -1,21 +1,42 @@
 <script setup lang="ts">
 import { usePostsStore } from '@/stores/postsStore';
-import { onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import GridCardComp from '../components/GridCardComp.vue'
 
 const postsStore = usePostsStore()
 
 onMounted(async () => {
   await postsStore.getPosts()
 })
+
+const postsIndex = ref<number>(0)
+
+const showAPost = computed(() => {
+  if(postsStore.posts && postsStore.posts.length > 0) {
+    return postsStore.posts[postsIndex.value].title
+  }
+})
+
+function showNextPost() {
+  if (postsStore.posts && postsIndex.value < postsStore.posts.length - 1) {
+    postsIndex.value++;
+  } else {
+    postsIndex.value = 0;
+  }
+}
 </script>
 
 <template>
   <h1 class="headline">The Dashboard</h1>
 
-  <div class="grid-container">
-    <div class="widget grid-item-1">Widget 1</div>
-    <div class="widget grid-item-2">Widget 2</div>
-    <div class="widget grid-item-3">Widget 3</div>
+  <div class="grid-container" v-if="postsStore.posts">
+    <GridCardComp class="grid-item-1">
+      <p>{{ showAPost }}</p> <button class="next-btn" @click="showNextPost">next post</button>
+    </GridCardComp>
+    <GridCardComp class="grid-item-2">
+
+    </GridCardComp>
+    <GridCardComp class="grid-item-3"></GridCardComp>
   </div>
 </template>
 
@@ -26,15 +47,15 @@ onMounted(async () => {
   margin-top: 0;
 }
 
-.widget {
-  background-color: #f0f0f0;
-  padding: 20px;
-  text-align: center;
-  height: 150px;
-  border-radius: 15px;
-  margin: 25px;
-  box-shadow: 5px 5px 15px 5px #000000;
-}
+// .widget {
+//   background-color: #f0f0f0;
+//   padding: 20px;
+//   text-align: center;
+//   height: 150px;
+//   border-radius: 15px;
+//   margin: 25px;
+//   box-shadow: 5px 5px 15px 5px #000000;
+// }
 
 @media only screen and (min-width: 390px) {
 
@@ -50,6 +71,14 @@ onMounted(async () => {
     grid-row-end: 2;
     grid-column-start: 2;
     grid-column-end: 12;
+    position: relative;
+
+    .next-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
   .grid-item-2 {
@@ -66,9 +95,9 @@ onMounted(async () => {
     grid-column-end: 12;
   }
 
-  .widget {
-    margin: unset;
-  }
+  // .widget {
+  //   margin: unset;
+  // }
 }
 
 @media only screen and (min-width: 600px) {
