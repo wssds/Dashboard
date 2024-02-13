@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import PostsService from '@/services/postsService'
 import { type Posts } from '@/models/models'
